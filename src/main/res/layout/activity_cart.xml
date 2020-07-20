@@ -72,6 +72,7 @@
 
             android:layout_below="@id/view1"/>
 
+
         <Button
             android:id="@+id/btnpalaceOrder"
             android:layout_width="match_parent"
@@ -85,16 +86,14 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"/>
 
-
     </RelativeLayout>
+
 
 
     <RelativeLayout
         android:id="@+id/progresslayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:visibility="invisible">
+        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/progressBar"
