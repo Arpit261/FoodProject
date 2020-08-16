@@ -24,7 +24,7 @@ in the cart and also they will show the amount in the button(PLACE ORDER) then t
 And once the user logout the application next time they will only login the user details (at the time when user register) then they will move to the 
 home page.
 
-And also there are more functionalities like Profile Fragment  , Favourite Fragment  and so on...
+And also there are more functionalities like Profile Fragment  , Favourite Fragment FAQ section  and so on...
 
 
 
@@ -45,11 +45,19 @@ Topic Covered:-
 
 ▪ GET REQUEST etc..
 
-**Note- All the data of hompage , menuitems are fetch from server. 
+** Note1- All the data of hompage , menuitems are fetch from server.
+
+** Note2- In the profile section you see the screenshot we not not showing the details of mine only the name so it does't mean that they are not working..
 
 
 
+![Screenshot_20200816-114847](https://user-images.githubusercontent.com/57999276/90328551-d5142600-dfba-11ea-8288-af7574f8847a.png)
 
+
+![Screenshot_20200816-114843](https://user-images.githubusercontent.com/57999276/90328556-d7768000-dfba-11ea-9d75-453ba0015804.png)
+
+
+![Screenshot_20200816-114853](https://user-images.githubusercontent.com/57999276/90328555-d6dde980-dfba-11ea-9a10-3d4b901ac65b.png)
 
 
 ![Screenshot_20200816-112000](https://user-images.githubusercontent.com/57999276/90327810-10abf180-dfb5-11ea-91ae-48207648fd87.png) 
