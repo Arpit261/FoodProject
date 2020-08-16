@@ -2,6 +2,7 @@ package activity
 
 
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import util.ConnectionManager
 import util.LOGIN
-import util.SessionManager
 import util.Validation
 import java.util.HashMap
 
@@ -36,13 +36,24 @@ class LoginActivity : AppCompatActivity() {
      lateinit var txtforgetpasswordlogin: TextView
     lateinit var txtregisteraccountlogin: TextView
 
-    lateinit var sessionManager: SessionManager
+
     lateinit var sharedPreferences: SharedPreferences
 
 
         override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            setContentView(R.layout.login_activity)
+
+            sharedPreferences=getSharedPreferences(getString(R.string.pref_name) , Context.MODE_PRIVATE)
+            /*   Initialising User login value true */
+
+            val isLoggedIn=sharedPreferences.getBoolean("isLoggedIn" ,false)
+            if (isLoggedIn){
+                val intent =  Intent(this,DashBoardActivity::class.java)
+                startActivity(intent)
+            }else {
+
+                setContentView(R.layout.login_activity)
+            }
 
             /*Initialising the views*/
             etmobilenumberlogin = findViewById(R.id.etmobilenumberlogin)
@@ -51,15 +62,6 @@ class LoginActivity : AppCompatActivity() {
             txtforgetpasswordlogin = findViewById(R.id.txtforgetpasswordlogin)
             txtregisteraccountlogin = findViewById(R.id.txtregisteraccountlogin)
 
-            /*Initialising the session variables*/
-            sessionManager = SessionManager(this)
-            sharedPreferences = this.getSharedPreferences(sessionManager.PREF_NAME, sessionManager.PRIVATE_MODE)
-
-            val isLoggedIn=sharedPreferences.getBoolean("isLoggedIn" ,false)
-            if (isLoggedIn){
-                val intent =  Intent(this,DashBoardActivity::class.java)
-                startActivity(intent)
-            }
 
 
                 /*Start the login process when the user clicks on the login button*/
@@ -98,7 +100,7 @@ class LoginActivity : AppCompatActivity() {
                                         sharedPreferences.edit().putString("user_email", response.getString("email")).apply()
                                         sharedPreferences.edit().putString("user_mobile", response.getString("mobile_number")).apply()
                                         sharedPreferences.edit().putString("user_address", response.getString("address")).apply()
-                                        sessionManager.setLogin(true)
+
                                         savePreferenece()
                                         val intent = Intent(
                                                 this@LoginActivity,
@@ -159,8 +161,9 @@ class LoginActivity : AppCompatActivity() {
                         btnlogin.visibility = View.VISIBLE
                         txtforgetpasswordlogin.visibility = View.VISIBLE
                         txtregisteraccountlogin.visibility = View.VISIBLE
+
                     }
-                 Toast.makeText(this ,"Mobile no.& Password does not match" ,Toast.LENGTH_SHORT).show()
+
              }
 
 
@@ -190,10 +193,7 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences.edit().putBoolean("isLoggedIn" ,true).apply()
      }
 
-    override fun onPause() {
-        super.onPause()
-        finish()
-    }
+
 
 }
 

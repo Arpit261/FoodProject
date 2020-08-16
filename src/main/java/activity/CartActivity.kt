@@ -3,16 +3,16 @@ package activity
 
 import adaptor.CartAdaptor
 import adaptor.Menurecycleradapter
+import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,8 +37,8 @@ class CartActivity : AppCompatActivity() {
     private lateinit var cartItemAdapter: CartAdaptor
     private var orderList = ArrayList<FoodItem>()
     private lateinit var txtResName: TextView
-    lateinit var rlLoading: RelativeLayout
-    private lateinit var rlCart: RelativeLayout
+    private lateinit var progressLayout: RelativeLayout
+    private lateinit var progressBar:ProgressBar
     private lateinit var btnPlaceOrder: Button
 
     private var resId: Int = 0
@@ -48,6 +48,12 @@ class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+        
+        progressLayout= findViewById(R.id.progresslayout)
+        progressLayout.visibility=View.VISIBLE
+        progressBar = findViewById(R.id.progressBar)
+
+        progressBar.visibility = View.GONE
 
 
         init()
@@ -58,14 +64,14 @@ class CartActivity : AppCompatActivity() {
 
 
     private fun init() {
-        rlLoading = findViewById(R.id.progressLayout)
-        rlCart = findViewById(R.id.rlCart)
+
+
         txtResName = findViewById(R.id.txtCartResName)
         txtResName.text = FragmentMenu.resName
 
         val bundle = intent.getBundleExtra("data")
         resId = bundle?.getInt("resId", 0) as Int
-        resName = bundle.getString("resName", "") as String
+        resName = bundle.getString("resName", " ") as String
     }
 
     private fun setupToolbar() {
@@ -92,11 +98,11 @@ class CartActivity : AppCompatActivity() {
 
         /*If the order list extracted from DB is empty we do not display the cart*/
         if (orderList.isEmpty()) {
-            rlCart.visibility = View.GONE
-            rlLoading.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
+            progressLayout.visibility = View.VISIBLE
         } else {
-            rlCart.visibility = View.VISIBLE
-            rlLoading.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+            progressLayout.visibility = View.GONE
         }
 
         /*Else we display the cart using the cart item adapter*/
@@ -107,7 +113,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun setUpOrder() {
-        btnPlaceOrder = findViewById(R.id.btnpalaceOrder)
+        btnPlaceOrder = findViewById(R.id.btnplaceorder)
 
         /*Before placing the order, the user is displayed the price or the items on the button for placing the orders*/
         var sum = 0
@@ -118,8 +124,8 @@ class CartActivity : AppCompatActivity() {
         btnPlaceOrder.text = total
 
         btnPlaceOrder.setOnClickListener {
-            rlLoading?.visibility = View.VISIBLE
-            rlCart.visibility = View.INVISIBLE
+            progressLayout.visibility = View.VISIBLE
+            progressBar.visibility = View.INVISIBLE
             sendServerRequest()
         }
     }
@@ -131,12 +137,10 @@ class CartActivity : AppCompatActivity() {
         val jsonParams = JSONObject()
         jsonParams.put(
                 "user_id",
-                this@CartActivity.getSharedPreferences("FoodApp", Context.MODE_PRIVATE).getString(
-                        "user_id",
-                        null
-                ) as String
-        )
+                this@CartActivity.getSharedPreferences("EatFood", Context.MODE_PRIVATE).getString("user_id", null) as String)
+
         jsonParams.put("restaurant_id", FragmentMenu.resId?.toString() as String)
+
         var sum = 0
         for (i in 0 until orderList.size) {
             sum += orderList[i].cost as Int
@@ -161,22 +165,38 @@ class CartActivity : AppCompatActivity() {
                         /*If order is placed, clear the DB for the recently added items
                         * Once the DB is cleared, notify the user that the order has been placed*/
                         if (success) {
+
                         ClearDBAsync(applicationContext, resId.toString()).execute().get()
                             Menurecycleradapter.isCartEmpty = true
 
+                            val dialog= Dialog(this , android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+                            dialog.setContentView(R.layout.order_placed)
+                            dialog.show()
+                            dialog.setCancelable(false)
+
+                            val button = dialog.findViewById<Button>(R.id.btnok)
+                            button.setOnClickListener{
+                                dialog.dismiss()
+                               val intent = Intent(this , LoginActivity::class.java)
+                                startActivity(intent)
+                                ActivityCompat.finishAffinity(this@CartActivity)
+                            }
+
+
+                        
                         } else {
-                            rlCart.visibility = View.VISIBLE
+                            progressBar.visibility = View.VISIBLE
                             Toast.makeText(this@CartActivity, "Some Error occurred", Toast.LENGTH_SHORT)
                                     .show()
                         }
 
                     } catch (e: Exception) {
-                        rlCart.visibility = View.VISIBLE
+                        progressBar.visibility = View.VISIBLE
                         e.printStackTrace()
                     }
 
                 }, Response.ErrorListener {
-                    rlCart.visibility = View.VISIBLE
+                    progressBar.visibility = View.VISIBLE
                     Toast.makeText(this@CartActivity, it.message, Toast.LENGTH_SHORT).show()
                 }) {
                     override fun getHeaders(): MutableMap<String, String> {

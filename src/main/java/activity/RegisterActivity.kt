@@ -8,6 +8,7 @@ package activity
 
 
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +26,6 @@ import org.json.JSONException
 import org.json.JSONObject
 import util.ConnectionManager
 import util.REGISTER
-import util.SessionManager
 import util.Validation
 import java.util.*
 
@@ -39,12 +39,13 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etconfirmregister: EditText
     private lateinit var btnregister: Button
     lateinit var sharedPreferences: SharedPreferences
-    lateinit var sessionManager: SessionManager
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        sharedPreferences=getSharedPreferences(getString(R.string.pref_name) ,Context.MODE_PRIVATE)
         setContentView(R.layout.registration)
 
         etnameregister = findViewById(R.id.etnameregister)
@@ -55,8 +56,8 @@ class RegisterActivity : AppCompatActivity() {
         etconfirmregister = findViewById(R.id.etconfirmregister)
         btnregister = findViewById(R.id.btnregister)
 
-        sessionManager = SessionManager(this@RegisterActivity)
-        sharedPreferences = this@RegisterActivity.getSharedPreferences(sessionManager.PREF_NAME, sessionManager.PRIVATE_MODE)
+
+
 
 
 
@@ -176,19 +177,13 @@ class RegisterActivity : AppCompatActivity() {
                         val response = data.getJSONObject("data")
 
 
-                        sharedPreferences.edit()
-                            .putString("user_id", response.getString("user_id")).apply()
-                        sharedPreferences.edit()
-                            .putString("user_name", response.getString("name")).apply()
-                        sharedPreferences.edit()
-                            .putString("user_email", response.getString("email")).apply()
-                        sharedPreferences.edit()
-                            .putString("user_mobile", response.getString("mobile_number"))
-                            .apply()
-                        sharedPreferences.edit()
-                            .putString("user_address", response.getString("address"))
-                            .apply()
-                        sessionManager.setLogin(true)
+                        sharedPreferences.edit().putString("user_id", response.getString("user_id")).apply()
+                        sharedPreferences.edit().putString("user_name", response.getString("name")).apply()
+                        sharedPreferences.edit().putString("user_email", response.getString("email")).apply()
+                        sharedPreferences.edit().putString("user_mobile", response.getString("mobile_number")).apply()
+                        sharedPreferences.edit().putString("user_address", response.getString("address")).apply()
+
+
 
                         val intent = Intent(
                             this@RegisterActivity,
@@ -238,4 +233,6 @@ class RegisterActivity : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
+
 }

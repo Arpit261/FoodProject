@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation
 import android.view.View
 import android.widget.*
+import androidx.core.app.ActivityCompat
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -33,78 +34,73 @@ import java.util.HashMap
         private lateinit var progressbar:ProgressBar
 
         override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_reset)
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_reset)
 
-           etotp = findViewById(R.id.etotp)
-          etnewpasswordreset = findViewById(R.id.etnewpasswordreset)
-          etconfirmpasswordreset = findViewById(R.id.etconfirmpasswordreset)
-          buttonsumbitreset = findViewById(R.id.btnsumbitreset)
+            etotp = findViewById(R.id.etotp)
+            etnewpasswordreset = findViewById(R.id.etnewpasswordreset)
+            etconfirmpasswordreset = findViewById(R.id.etconfirmpasswordreset)
+            buttonsumbitreset = findViewById(R.id.btnsumbitreset)
 
-           r1progresslayout = findViewById(R.id.progressLayout)
-            progressbar =findViewById(R.id.progressBar)
+            r1progresslayout = findViewById(R.id.Progresslayout)
+            progressbar = findViewById(R.id.Progressbar)
 
             r1progresslayout.visibility = View.VISIBLE
             progressbar.visibility = View.GONE
 
 
 
-          if (intent != null){
-            mobileNumber = intent.getStringExtra("user_mobile")as String
-          }
+            if (intent != null) {
+                mobileNumber = intent.getStringExtra("user_mobile") as String
+            }
 
-                 buttonsumbitreset.setOnClickListener {
-                    r1progresslayout.visibility = View.GONE
-                    progressbar.visibility = View.VISIBLE
+                buttonsumbitreset.setOnClickListener {
+
 
                     if (ConnectionManager().isNetworkAvailable(this@ResetActivity)) {
-                    if (etotp.text.length==4) {
-//                        etotp.error = null
-                     if (Validation.validatepasswordlength(etnewpasswordreset.text.toString())) {
-//                     etnewpasswordreset.error = null
+                        if (etotp.text.length == 4) {
+                            etotp.error = null
+                            if (Validation.validatepasswordlength(etnewpasswordreset.text.toString())) {
+                                etnewpasswordreset.error = null
 
-                       if (Validation.matchpassword(etnewpasswordreset.text.toString(), etconfirmpasswordreset.text.toString())) {
-//                         etnewpasswordreset.error = null
-//                         etconfirmpasswordreset.error = null
+                                if (Validation.matchpassword(etnewpasswordreset.text.toString(), etconfirmpasswordreset.text.toString())) {
+                                    etnewpasswordreset.error = null
+                                    etconfirmpasswordreset.error = null
 
-                             sendRequestReset(
-                                     mobileNumber,
-                                     etotp.text.toString(),
-                                     etnewpasswordreset.text.toString()
+                                    sendRequestReset(
+                                            mobileNumber,
+                                            etotp.text.toString(),
+                                            etnewpasswordreset.text.toString()
 
-                             )
+                                    )
+                                } else {
+                                    r1progresslayout.visibility = View.VISIBLE
+                                    progressbar.visibility = View.GONE
+                                    Toast.makeText(this, "Password does't match", Toast.LENGTH_SHORT).show()
+
+                                }
+                            } else {
+                                r1progresslayout.visibility = View.VISIBLE
+                                progressbar.visibility = View.GONE
+                                Toast.makeText(this, "Password length incorrect", Toast.LENGTH_SHORT).show()
                             }
-                            else {
-                              r1progresslayout.visibility = View.VISIBLE
-                              progressbar.visibility = View.GONE
-                             Toast.makeText(this, "Password does't match", Toast.LENGTH_SHORT).show()
 
-                          }
-                          }
-                     else {
-                           r1progresslayout.visibility = View.VISIBLE
-                           progressbar.visibility = View.GONE
-//                         etnewpasswordreset.error = "Password does't match"
-//                         etconfirmpasswordreset.error = "Password does't match"
-                         Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show()
-                         }
+                        } else {
+                            r1progresslayout.visibility = View.VISIBLE
+                            progressbar.visibility = View.GONE
 
-                     } else {
-                         r1progresslayout.visibility = View.VISIBLE
-                         progressbar.visibility = View.GONE
-//                     etotp.error = "OTP should be greater than 4"
-                     Toast.makeText(this, "OTP should be greater than 4", Toast.LENGTH_SHORT).show()
-                     }
-                    }  else
-                    {
+                            Toast.makeText(this, "OTP should be greater than 4", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
                         r1progresslayout.visibility = View.VISIBLE
                         progressbar.visibility = View.GONE
-                    Toast.makeText(this , "No internet connection" , Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show()
                     }
 
                 }
-            }
 
+
+        }
 
              private fun sendRequestReset(mobile: String, password: String, otp: String) {
 
@@ -121,11 +117,13 @@ import java.util.HashMap
                 val success = data.getBoolean("success")
 
                     if (success) {
-                        progressbar.visibility = View.INVISIBLE
+                    progressbar.visibility=View.INVISIBLE
 
-                        val intent = Intent(this, LoginActivity::class.java)
+                        val intent = Intent(this@ResetActivity, LoginActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        ActivityCompat.finishAffinity(this@ResetActivity)
+
+
                     Toast.makeText(this, "Password Successfully Changed", Toast.LENGTH_SHORT).show()
 
 
@@ -133,11 +131,10 @@ import java.util.HashMap
                     else {
                         r1progresslayout.visibility = View.VISIBLE
                         progressbar.visibility = View.GONE
+                        val error =data.getString("errorMessage")
                           Toast.makeText(
                             this,
-                            "Some error occured",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            error ,Toast.LENGTH_SHORT).show()
                         }
 
                     } catch (e: JSONException) {

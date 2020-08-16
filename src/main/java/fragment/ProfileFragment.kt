@@ -8,11 +8,11 @@ import android.view.LayoutInflater
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 
 import com.arpit.foodproject.R
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileFragment : Fragment() {
@@ -21,35 +21,35 @@ class ProfileFragment : Fragment() {
     lateinit var txtphone:TextView
     lateinit var txtemail:TextView
     lateinit var txtaddress:TextView
-
+    lateinit var imgUser:ImageView
     lateinit var sharedperference:SharedPreferences
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-         val view  = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        sharedperference = (activity as FragmentActivity).getSharedPreferences("FoodApp", Context.MODE_PRIVATE)
+
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+
+
+       sharedperference = (activity as FragmentActivity).getSharedPreferences(getString(R.string.pref_name) , Context.MODE_PRIVATE)
 
 
             txtusername=view.findViewById(R.id.txtUserName)
-             txtphone=view.findViewById(R.id.txtPhone)
+            txtphone=view.findViewById(R.id.txtPhone)
+             txtemail=view.findViewById(R.id.txtEmail)
             txtaddress=view.findViewById(R.id.txtAddress)
-            txtemail=view.findViewById(R.id.txtEmail)
+          imgUser = view.findViewById(R.id.imgUserImageprofile)
 
-
-        txtUserName.text = sharedperference.getString("user_name", null)
-        val phoneText = "+91-${sharedperference.getString("user_mobile", null)}"
-        txtPhone.text = phoneText
-        txtEmail.text = sharedperference.getString("user_email", null)
-        val address = sharedperference.getString("user_address", null)
-        txtAddress.text = address
-
-
+                txtusername.text = " ${sharedperference.getString("user_name" ," ")}"
+                txtphone.text= " ${sharedperference.getString("user_mobile" , " ")}"
+              txtemail.text=  "  ${sharedperference.getString("user_email" ," ")}"
+             txtaddress.text= "  ${sharedperference.getString("user_address" , " ")}"
         return view
 
     }
 
-}
+    }
+

@@ -9,8 +9,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/progressLayout">
+        android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/txtreceivedotp"
@@ -81,12 +80,23 @@
         android:textStyle="bold"/>
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
+
+ <RelativeLayout
+     android:id="@+id/Progresslayout"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+      >
+
+        <ProgressBar
+            android:id="@+id/Progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+
+ </RelativeLayout>
+
+
 
 
 </RelativeLayout>

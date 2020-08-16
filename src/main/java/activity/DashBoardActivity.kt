@@ -1,6 +1,7 @@
 package activity
 
 import adaptor.Menurecycleradapter
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,6 @@ import com.arpit.foodproject.R
 import com.google.android.material.navigation.NavigationView
 import fragment.*
 import fragment.FragmentMenu.Companion.resId
-import util.SessionManager
 
 
 class DashBoardActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class DashBoardActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     lateinit var frameLayout: FrameLayout
     lateinit var navigationView: NavigationView
-    private lateinit var sessionManager: SessionManager
+
     private lateinit var sharedPrefs: SharedPreferences
 
     var previousMenuItem: MenuItem? = null
@@ -37,12 +37,8 @@ class DashBoardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        sessionManager = SessionManager(this@DashBoardActivity)
-        sharedPrefs = this@DashBoardActivity.getSharedPreferences(
-                sessionManager.PREF_NAME,
-                sessionManager.PRIVATE_MODE
-        )
 
+        sharedPrefs=getSharedPreferences(getString(R.string.pref_name) , Context.MODE_PRIVATE)
         drawerLayout = findViewById(R.id.drawerlayout)
         coordinatorLayout = findViewById(R.id.coordinatorlayout)
         toolbar = findViewById(R.id.toolbar)
@@ -117,7 +113,7 @@ class DashBoardActivity : AppCompatActivity() {
                     builder.setTitle("Confirmation")
                             .setMessage("Are you sure you want exit?")
                             .setPositiveButton("Yes") { _, _ ->
-                                sessionManager.setLogin(false)
+
                                 sharedPrefs.edit().clear().apply()
                                 startActivity(Intent(this@DashBoardActivity, LoginActivity::class.java))
                                 Volley.newRequestQueue(this).cancelAll(this::class.java.simpleName)
@@ -178,8 +174,9 @@ class DashBoardActivity : AppCompatActivity() {
                     builder.setTitle("Confirmation")
                             .setMessage("Going back will reset cart items. Do you still want to proceed?")
                             .setPositiveButton("Yes") { _, _ ->
-                                        CartActivity.ClearDBAsync(applicationContext, resId.toString()).execute().get()
+                              val clearCart= CartActivity.ClearDBAsync(applicationContext, resId.toString()).execute().get()
                                 openHome()
+
                                 Menurecycleradapter.isCartEmpty = true
                             }
                             .setNegativeButton("No") { _, _ ->

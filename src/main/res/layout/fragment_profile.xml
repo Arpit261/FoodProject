@@ -3,82 +3,126 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fafafa">
+    android:id="@+id/relativelayoutprofile"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="4dp">
+        android:layout_height="200dp"
+
+        android:padding="4dp"
+        android:background="@color/colorPrimary">
 
         <ImageView
             android:id="@+id/imgUserImageprofile"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
 
-            android:src="@drawable/profile_icon" />
+           android:layout_centerVertical="true"
+            android:src="@drawable/imageprofile" />
 
-        <LinearLayout
-            android:id="@+id/llProfile"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/hello"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgUserImageprofile"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:padding="4dp">
+
+            android:layout_marginTop="35dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/bungee"
+            android:includeFontPadding="false"
+            android:paddingLeft="10dp"
+            android:text="Hello,"
+            android:textColor="#fff"
+            android:textSize="22sp" />
 
 
-            <TextView
-                android:id="@+id/txtUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/name"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
+        <TextView
+            android:id="@+id/txtUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/imgUserImageprofile"
+           android:fontFamily="@font/bungee"
+            android:includeFontPadding="false"
 
+            android:text="Loading"
+            android:textColor="#fff"
+            android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/txtPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:text="@string/phone"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/txtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-
-                android:padding="10dp"
-                android:text="@string/email"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/txtAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="@string/address"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+       android:padding="10dp"
+        android:layout_marginTop="200dp">
+
+
+
+        <TextView
+            android:id="@+id/txtPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+
+            android:drawableLeft="@drawable/ic_phone"
+            android:padding="4dp"
+            android:text="@string/phone"
+            android:textColor="#424242"
+            android:textSize="22sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0dp"
+
+            android:background="#424242"/>
+
+
+        <TextView
+            android:id="@+id/txtAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="22sp"
+
+            android:padding="4dp"
+            android:drawableLeft="@drawable/ic_address"
+
+
+            android:text="@string/address"
+
+            android:textColor="#424242" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0dp"
+            android:background="#424242"/>
+
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawableLeft="@drawable/ic_emailadress"
+            android:textSize="20sp"
+            android:padding="4dp"
+            android:text="@string/email"
+            android:textColor="#424242" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0dp"
+            android:background="#424242"/>
+
+
+
+       </LinearLayout>
+
+
+
+
+
 
 </RelativeLayout>

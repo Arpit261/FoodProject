@@ -2,25 +2,33 @@
     <string name="app_name">FoodApp</string>
     <string name="open_drawer">opendrawer</string>
     <string name="close_drawer">closedrawer</string>
+    <string name="pref_name">EatFood</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="faq_answer_one">A.1 You will be taught using pre-recorded videos and text tutorials. The training has
-        quizzes, assignments, and tests to help you learn better. At the end of the training, you will attempt a project
-        to get hands-on practice of what you learn during your training.
+    <string name="faq_answer_one">A.1 Getting your food to your face should be easy, so paying for your food needs to be easy too.
+        We accept all the major online payment methods.
+        This means you can use VISA, MasterCard, American Express and PayPal. Or you can go the old fashion route and pay by Cash on delivery/pick up.
+        Keep in mind that it always comes down to what the restaurant accepts, so double check when you place your order.
     </string>
-    <string name="faq_answer_two">A.2 As this is a purely online training program, you can choose to learn at any time
-        of the day. We will recommend a pace to be followed throughout the program, but the actual timings and learning
-        hours can be decided by students according to their convenience.
+    <string name="faq_answer_two">A.2 We take the security of our customers very seriously.
+        Our high-tech security system ensures that your card details are not shared with anyone else including the restaurant,
+        you can read more about what steps we take to protect you as our valued customer in our privacy policy.
     </string>
-    <string name="faq_answer_four">A.4 We recommend spending 10-12 hours per week. However, the actual learning hours
-        can be decided by you as per your convenience.
+    <string name="faq_answer_four">A.4 Rejection is never great, so we work really hard with our restaurants to get as many orders accepted as possible.
+        Sometimes a rejected order may look like payment has gone through, but do not  worry, it was voided and is simply pending with your bank.
+        This may take 1¬5 business days so it is best to give the bank a call if you have any questions.
+        As always, we are here to help if we can - give us a call at  1-855-424-3382 with any questions.
     </string>
-    <string name="faq_answer_three">A.3 The training duration is of 6 weeks.</string>
-    <string name="faq_answer_five">A.5 You can choose your preferred batch date while signing up for the training
-        program.
+    <string name="faq_answer_three">A.3 You will get an SMS within 5 to 10 minutes of ordering that will give you an estimated time of your order completion.</string>
+    <string name="faq_answer_five">A.5 Sure can! Check your confirmation email for the restaurant number and give them a buzz if you have any questions or requests on the prep and delivery of the food.
+        Feel free to give us a buzz too, we are always happy to help out if you not been able to get through to the restaurant.
     </string>
-    <string name="faq_answer_six">A.6 You will be able to download the certificate once you complete your training and
-        take the final test.
+    <string name="faq_answer_six">A.6 We know you are hungry, so we strive to get your food to you as soon as possible. Most deliveries will arrive in under an hour.
+        However, remember delivery time can be influenced by the restaurants ability to prepare your food, weather and traffic conditions.
+
+If you require a specific lunch time delivery or a large order, we suggest that you give us a 24-hour notice. This is not required, but is helpful to ensure you get an awesome experience.
+
     </string>
     <string name="empty_cart">Your cart is currently empty</string>
     <string name="no_favorites">You do not have any favorite restaurants</string>
