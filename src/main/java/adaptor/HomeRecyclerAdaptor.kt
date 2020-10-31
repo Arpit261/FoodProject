@@ -26,7 +26,7 @@ import fragment.FragmentMenu
 import model.Foods
 
 
-class HomeRecyclerAdaptor(private var foods: ArrayList<Foods>, val context: Context) :
+class  HomeRecyclerAdaptor(private var foods: ArrayList<Foods>, val context: Context) :
         RecyclerView.Adapter<HomeRecyclerAdaptor.HomeViewHolder>() {
 
 
@@ -49,6 +49,7 @@ class HomeRecyclerAdaptor(private var foods: ArrayList<Foods>, val context: Cont
 
 
         val listOfFavourites = GetAllFav(context).execute().get()
+
         if (listOfFavourites.isNotEmpty() && listOfFavourites.contains(food.id.toString())) {
             holder.favImage.setImageResource(R.drawable.ic_action_favchecked)
         } else {
@@ -56,6 +57,7 @@ class HomeRecyclerAdaptor(private var foods: ArrayList<Foods>, val context: Cont
         }
 
           holder.favImage.setOnClickListener {
+
             val foodentity = FoodEntity(
                     food.id,
                     food.name,
@@ -66,13 +68,16 @@ class HomeRecyclerAdaptor(private var foods: ArrayList<Foods>, val context: Cont
             )
 
               if (!DBAsyncTask(context, foodentity, 1).execute().get()) {
+
                   val async = DBAsyncTask(context, foodentity, 2).execute()
+
                     val result = async.get()
                     if (result){
                         Toast.makeText(context , "Added to favourite" ,Toast.LENGTH_SHORT).show()
                         holder.favImage.setImageResource(R.drawable.ic_action_favchecked)
                          }
-                    } else {
+                    }
+                 else {
                   val async = DBAsyncTask(context, foodentity, 3).execute()
                   val result = async.get()
                   if (result) {
@@ -162,10 +167,13 @@ class HomeRecyclerAdaptor(private var foods: ArrayList<Foods>, val context: Cont
     * For simplicity we obtain the list of restaurants and then extract their ids which is then compared to the ids
     * inside the list sent to the adapter */
     class GetAllFav(context: Context) : AsyncTask<Void, Void, List<String>>() {
+
         val db = Room.databaseBuilder(context, Fooddatabase::class.java, "res-db").build()
+
         override fun doInBackground(vararg params: Void?): List<String> {
             val list = db.foodDao().getAllFoods()
             val lisOfIds = arrayListOf<String>()
+
             for (i in list) {
                 lisOfIds.add(i.id.toString())
             }
